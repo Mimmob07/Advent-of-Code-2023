@@ -25,9 +25,6 @@ func cleanLine(line []string) []string {
 }
 
 func main() {
-	var (
-		sum int = 1
-	)
 	if len(os.Args) != 2 {
 		fmt.Println("Usage: ./main <filename>")
 		os.Exit(1)
@@ -40,20 +37,25 @@ func main() {
 	lines := strings.Split(file, "\n")
 	times := cleanLine(strings.Split(lines[0], " ")[1:])
 	distances := cleanLine(strings.Split(lines[1], " ")[1:])
-
-	for i := 0; i < len(times); i++ {
-		time, err := strconv.Atoi(times[i])
-		check(err)
-		dist, err := strconv.Atoi(distances[i])
-		check(err)
-		wins := 0
-		for v := 0; v < time; v++ {
-			d := v * (time - v)
-			if d > dist {
-				wins++
-			}
-		}
-		sum *= wins
+	timeS := ""
+	distanceS := ""
+	for _, nums := range times {
+		timeS += nums
 	}
-	fmt.Println(sum)
+	for _, dist := range distances {
+		distanceS += dist
+	}
+	time, err := strconv.Atoi(timeS)
+	check(err)
+	distance, err := strconv.Atoi(distanceS)
+	check(err)
+
+	wins := 0
+	for v := 0; v < time; v++ {
+		d := v * (time - v)
+		if d > distance {
+			wins++
+		}
+	}
+	fmt.Println(wins)
 }
